@@ -8,12 +8,16 @@
     "serverstart": "DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "^4.16.4",
+    "express-router": "0.0.1",
     "http-errors": "~1.6.3",
     "jade": "^1.11.0",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "npm-check-updates": "^6.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
