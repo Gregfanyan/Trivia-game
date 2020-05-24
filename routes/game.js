@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
-//var app = require('../app');
-const pool = require("../config.js")
+const pool = require("../config.js");
+var cors = require('cors');
 
 
-router.get("/game", (req, res) => {
+
+router.get("/game", cors(), (req, res) => {
   pool
     .query("SELECT * FROM game")
     .then((data) => res.json(data))
@@ -12,5 +13,17 @@ router.get("/game", (req, res) => {
       res.sendStatus(404), console.log(e);
     });
 });
+
+
+
+router.post("/game", (req, res) => {
+  const { name } = req.body; 
+
+  pool
+    .query('INSERT INTO game(name) values($1);', [name])
+    .then(data => res.status(201).json(data))
+    .catch(e => res.sendStatus(404));
+ });
+
 
 module.exports = router;
