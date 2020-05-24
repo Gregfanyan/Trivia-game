@@ -4,9 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const dotenv = require("dotenv");
-var bodyParser = require('body-parser')
-
+var bodyParser = require('body-parser');
+var cors = require('cors');
 var app = express();
+
+app.use(cors());
 
 
 app.use(bodyParser.urlencoded());
