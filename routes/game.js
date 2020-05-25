@@ -3,8 +3,6 @@ var router = express.Router();
 const pool = require("../config.js");
 var cors = require('cors');
 
-
-
 router.get("/game", cors(), (req, res) => {
   pool
     .query("SELECT * FROM game")
@@ -14,14 +12,14 @@ router.get("/game", cors(), (req, res) => {
     });
 });
 
-
-
 router.post("/game", (req, res) => {
   const { name } = req.body; 
 
   pool
-    .query('INSERT INTO game(name) values($1);', [name])
-    .then(data => res.status(201).json(data))
+    .query('INSERT INTO game(name) values($1) RETURNING *;', [name])
+    .then(() => {
+      pool.query('SELECT * FROM game').then((data) => res.json(data))
+    })
     .catch(e => res.sendStatus(404));
  });
 
