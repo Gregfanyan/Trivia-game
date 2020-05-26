@@ -27,8 +27,8 @@ router.post("/question", (req, res) => {
 
 router.get("/question/:name", (req, res) => {
   const { name } = req.params;
-  pool
-    .query('SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = $1;', [name])
+  pool 
+    .query('SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = $1', [name])
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
