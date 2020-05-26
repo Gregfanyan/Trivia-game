@@ -5,7 +5,7 @@ const pool = require("../config.js")
 
 router.get("/question", (req, res) => {
   pool
-    .query("SELECT * FROM question")
+    .query("SELECT * FROM question LIMIT 10")
     .then((data) => res.json(data))
     .catch((e) => {
       res.sendStatus(404), console.log(e);
@@ -27,8 +27,8 @@ router.post("/question", (req, res) => {
 
 router.get("/question/:name", (req, res) => {
   const { name } = req.params;
-  pool
-    .query('SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = $1;', [name])
+  pool 
+    .query('SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = $1', [name])
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
