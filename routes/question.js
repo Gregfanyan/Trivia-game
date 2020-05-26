@@ -5,7 +5,7 @@ const pool = require("../config.js")
 
 router.get("/question", (req, res) => {
   pool
-    .query("SELECT * FROM question")
+    .query("SELECT * FROM question LIMIT 10")
     .then((data) => res.json(data))
     .catch((e) => {
       res.sendStatus(404), console.log(e);
