@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-//var app = require('../app');
 const pool = require("../config.js")
 
 
@@ -25,27 +24,25 @@ router.post("/question", (req, res) => {
     });
  });
 
-router.get("/question/hard", (req, res) => {
+
+router.get("/question/:name", (req, res) => {
+  const { name } = req.params;
   pool
-    .query("SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = 'hard'")
-    .then((data) => res.json(data))
-    .catch((e) => {
-      res.sendStatus(404), console.log(e);
-    });
-});
+    .query('SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = $1;', [name])
+    .then(data => res.json(data)) 
+    .catch(e => res.sendStatus(404)); 
+ });
 
-router.get("/question/easy", (req, res) => {
+ router.get("/question/category/:name", (req, res) => {
+  const { name } = req.params;
   pool
-    .query("SELECT * FROM question JOIN difficulty ON (difficulty.id=question.id) WHERE name = 'easy'")
-    .then((data) => res.json(data))
-    .catch((e) => {
-      res.sendStatus(404), console.log(e);
-    });
-});
+    .query('SELECT * FROM question JOIN category ON (category.id=question.id) WHERE name = $1;', [name])
+    .then(data => res.json(data)) 
+    .catch(e => res.sendStatus(404)); 
+ });
 
 
-
-router.get("/:id", (req, res) => {
+ router.get("/:id", (req, res) => {
   const { id } = req.params;
   pool
     .query('SELECT * FROM question WHERE id=$1;', [id])
