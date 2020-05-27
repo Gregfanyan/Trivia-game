@@ -13,10 +13,10 @@ router.get("/category/category", (req, res) => {
 });
 
 
-router.get("/category/:id", (req, res) => {
-  const { id } = req.params;
+router.get("/category/:name", (req, res) => {
+  const { name } = req.params;
   pool
-    .query('SELECT * FROM category WHERE id=$1;', [id])
+    .query('SELECT * FROM category WHERE name=$1;', [name])
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
