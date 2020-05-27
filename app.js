@@ -18,6 +18,10 @@ var questionRouter = require('./routes/question');
 var categoryRouter = require('./routes/category');
 var difficultyRouter = require('./routes/difficulty');
 var gameRouter = require('./routes/game');
+var trivia_terror_trollRouter = require('./routes/trivia_terror_troll');
+var game_movesRouter = require('./routes/game_moves');
+
+
 
 
 
@@ -43,6 +47,9 @@ app.use('/', questionRouter);
 app.use('/', categoryRouter);
 app.use('/', difficultyRouter);
 app.use('/', gameRouter);
+app.use('/', game_movesRouter);
+app.use('/', trivia_terror_trollRouter);
+
 
 
 
