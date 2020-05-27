@@ -24,6 +24,27 @@ router.post("/question", (req, res) => {
     });
  });
 
+ router.get("/:category/:difficulty/:number", (req, res) => {
+  const { category, difficulty } = req.params;
+  pool 
+    .query('SELECT category.name, difficulty.name, text FROM question JOIN difficulty ON (difficulty.id=question.id) JOIN category ON (question.id = category.id) WHERE category.name = $1 AND difficulty.name = $2', [category, difficulty])
+    .then(data => res.json(data)) 
+    .catch(e => {res.sendStatus(404)
+      console.log(e)
+    }); 
+ });
+
+ 
+ /*router.get("/:category/:difficulty/:number", (req, res) => {
+  const { category, difficulty, number } = req.params;
+  pool 
+    .query('SELECT category.name, difficulty.name FROM question JOIN difficulty ON (difficulty.id=question.id) JOIN category ON (question.id = category.id)) WHERE IN (category.name = $1, difficulty.name = $2, number =$3)', [category, difficulty, number])
+    .then(data => {res.json(data)
+    console.log(data)
+    }) 
+    .catch(e => res.sendStatus(404)); 
+ });*/
+ 
 
 router.get("/question/:name", (req, res) => {
   const { name } = req.params;
