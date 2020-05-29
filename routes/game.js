@@ -14,9 +14,8 @@ router.post("/game", (req, res) => {
 
   pool
     .query('INSERT INTO game(name) values($1) RETURNING *;', [name])
-    .then(() => {
-      pool.query('SELECT * FROM game').then((data) => res.json(data))
-    })
+    .then(() => {pool.query('SELECT * FROM game')
+    .then((data) => res.json(data))})
     .catch(e => res.sendStatus(404));
  });
 
