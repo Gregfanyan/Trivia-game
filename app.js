@@ -20,6 +20,7 @@ app.use(allowCrossDomain);
 app.use(cors());
 
 app.use(bodyParser.urlencoded());
+
 app.use(express.json());
 
 var indexRouter = require("./routes/index");
