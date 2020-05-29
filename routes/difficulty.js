@@ -3,7 +3,7 @@ var router = express.Router();
 const pool = require("../config.js")
 
 
-router.get("/difficulty/difficulty", (req, res) => {
+router.get("/difficulty", (req, res) => {
   pool
     .query("SELECT * FROM difficulty")
     .then((data) => res.json(data))

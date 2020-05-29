@@ -3,7 +3,7 @@ var router = express.Router();
 const pool = require("../config.js")
 
 
-router.get("/trivia_terror_troll/trivia_terror_troll", (req, res) => {
+router.get("/trivia_terror_troll", (req, res) => {
   pool
     .query("SELECT * FROM trivia_terror_troll")
     .then((data) => res.json(data))

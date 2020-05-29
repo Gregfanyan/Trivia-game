@@ -1,8 +1,4 @@
-#!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
 
 var app = require("../app");
 var debug = require("debug")("trivia-terror-backend:server");
@@ -10,9 +6,7 @@ var http = require("http");
 
 var server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+
 
 server.listen(process.env.PORT || 3000, () =>
   console.log(`Server running on port ${process.env.PORT || 3000}`)

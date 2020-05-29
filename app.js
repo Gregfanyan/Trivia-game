@@ -8,6 +8,15 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var app = express();
 
+
+
+let allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Headers', "*");
+  next();
+}
+app.use(allowCrossDomain);
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded());
@@ -37,11 +46,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/", questionRouter);
-app.use("/", categoryRouter);
-app.use("/", difficultyRouter);
-app.use("/", gameRouter);
-app.use("/", game_movesRouter);
-app.use("/", trivia_terror_trollRouter);
+app.use("/category", categoryRouter);
+app.use("/difficulty", difficultyRouter);
+app.use("/game", gameRouter);
+app.use("/game_moves", game_movesRouter);
+app.use("/trivia_terror_troll", trivia_terror_trollRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
@@ -58,3 +67,4 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+

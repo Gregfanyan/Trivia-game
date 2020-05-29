@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const pool = require("../config.js");
 
-router.get("/category/category", (req, res) => {
+router.get("/category", (req, res) => {
   pool
     .query("SELECT * FROM category")
     .then((data) => res.json(data))
