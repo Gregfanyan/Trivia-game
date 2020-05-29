@@ -1,27 +1,23 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const pool = require("../config.js")
+const pool = require("../config.js");
 
-
-router.get("/category/category", (req, res) => {
+router.get("/category", (req, res) => {
   pool
-    .query('SELECT * FROM category')
+    .query("SELECT * FROM category")
     .then((data) => res.json(data))
     .catch((e) => {
-      res.sendStatus(404), console.log(e);
+      console.log(e);
+      res.sendStatus(404);
     });
 });
-
 
 router.get("/category/:name", (req, res) => {
   const { name } = req.params;
   pool
-    .query('SELECT * FROM category WHERE name=$1;', [name])
-    .then(data => res.json(data)) 
-    .catch(e => res.sendStatus(404)); 
- });
-
-
-
+    .query("SELECT * FROM category WHERE name=$1;", [name])
+    .then((data) => res.json(data))
+    .catch((e) => res.sendStatus(404));
+});
 
 module.exports = router;
