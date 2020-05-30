@@ -34,17 +34,6 @@ router.post("/question", (req, res) => {
     console.log(e)
     });  
  });
-
- 
- /*router.get("/:category/:difficulty/:number", (req, res) => {
-  const { category, difficulty, number } = req.params;
-  pool 
-    .query('SELECT category.name, difficulty.name FROM question JOIN difficulty ON (difficulty.id=question.id) JOIN category ON (question.id = category.id)) WHERE IN (category.name = $1, difficulty.name = $2, number =$3)', [category, difficulty, number])
-    .then(data => {res.json(data)
-    console.log(data)
-    }) 
-    .catch(e => res.sendStatus(404)); 
- });*/
  
 
 router.get("/question/:name", (req, res) => {

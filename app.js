@@ -31,6 +31,8 @@ var gameRouter = require("./routes/game");
 var trivia_terror_trollRouter = require("./routes/trivia_terror_troll");
 var game_movesRouter = require("./routes/game_moves");
 var avatarRouter = require("./routes/avatar");
+var userRouter = require("./routes/user");
+
 
 
 /* start
@@ -56,6 +58,8 @@ app.use("/game", gameRouter);
 app.use("/game_moves", game_movesRouter);
 app.use("/trivia_terror_troll", trivia_terror_trollRouter);
 app.use("/avatar", avatarRouter);
+app.use("/user", userRouter);
+
 
 
 app.use(function (req, res, next) {
