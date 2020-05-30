@@ -30,6 +30,8 @@ var difficultyRouter = require("./routes/difficulty");
 var gameRouter = require("./routes/game");
 var trivia_terror_trollRouter = require("./routes/trivia_terror_troll");
 var game_movesRouter = require("./routes/game_moves");
+var avatarRouter = require("./routes/avatar");
+
 
 /* start
 DEBUG=TRIVIA-TERROR-BACKEND:* npm start
@@ -53,6 +55,8 @@ app.use("/difficulty", difficultyRouter);
 app.use("/game", gameRouter);
 app.use("/game_moves", game_movesRouter);
 app.use("/trivia_terror_troll", trivia_terror_trollRouter);
+app.use("/avatar", avatarRouter);
+
 
 app.use(function (req, res, next) {
   next(createError(404));
