@@ -8,7 +8,11 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var app = express();
 
-
+/* start
+DEBUG=TRIVIA-TERROR-BACKEND:* npm start
+DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
+sudo pkill -u postgres
+*/
 
 let allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");
@@ -32,14 +36,6 @@ var trivia_terror_trollRouter = require("./routes/trivia_terror_troll");
 var game_movesRouter = require("./routes/game_moves");
 var avatarRouter = require("./routes/avatar");
 var userRouter = require("./routes/user");
-
-
-
-/* start
-DEBUG=TRIVIA-TERROR-BACKEND:* npm start
-DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
-sudo pkill -u postgres
-*/
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
