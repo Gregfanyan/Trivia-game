@@ -52,8 +52,6 @@ var trivia_terror_trollRouter = require("./routes/trivia_terror_troll");
 var game_movesRouter = require("./routes/game_moves");
 var avatarRouter = require("./routes/avatar");
 var userRouter = require("./routes/user");
-var testUserRouter = require("./routes/testUser");
-
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
@@ -99,7 +97,6 @@ app.use("/game_moves", game_movesRouter);
 app.use("/trivia_terror_troll", trivia_terror_trollRouter);
 app.use("/avatar", avatarRouter);
 app.use("/user", userRouter);
-app.use("/testUser", testUserRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
