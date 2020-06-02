@@ -18,7 +18,7 @@ router.post("/user", (req, res) => {
 
   pool
     .query('INSERT INTO users (username, email, password, avatarurl) values($1, $2, $3, $4)RETURNING *;',
-    [username, email, password, avatarurl])
+    [username, email, crypt('password', gen_salt('bf')), avatarurl])
     .then(() => {pool.query('SELECT * FROM users')
     .then(data => {res.status(201).json(data)
     console.log(data)
