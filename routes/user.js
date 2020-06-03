@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const pool = require("../config.js");
 var jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 
 
 /*
@@ -20,17 +23,17 @@ router.get("/user", (req, res) => {
 
 router.post("/register", (req, res) => {
   const {username, email, password, avatarurl} = req.body; 
-
+  bcrypt.hash(password, saltRounds, function(err, hash) {
   pool
     .query('INSERT INTO users (username, email, password, avatarurl) values($1, $2, $3, $4)RETURNING *;',
-    [username, email, password, avatarurl])
+    [username, email, hash, avatarurl])
     .then(() => {pool.query('SELECT * FROM users')
     .then(data => {res.status(201).json(data)
-    console.log(data)
     })})
     .catch(e =>{ res.sendStatus(404)
     console.log(e)
     });
+  });
  });
  
  router.post("/login", (req, res) => {
@@ -39,7 +42,7 @@ router.post("/register", (req, res) => {
     .query("SELECT * FROM users WHERE email = $1 AND password = $2 LIMIT 1", [email, password ])
     if ( email && password === req.body.password) {
       const token = jwt.sign({ email: req.body.email }, "mySecretKey", {
-        expiresIn: "1 day",
+        expiresIn: "30 day",
       });
       res.send(token);
     } else {
