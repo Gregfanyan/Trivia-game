@@ -7,6 +7,7 @@ const pool = require("../config.js")
 DEBUG=TRIVIA-TERROR-BACKEND:* npm start
 DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
 sudo pkill -u postgres
+lsof -i tcp:3000 kill -9 pid
 */
 
 router.get("/question", (req, res) => {

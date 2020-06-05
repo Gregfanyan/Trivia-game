@@ -9,8 +9,6 @@ const saltRounds = 10;
 /*
 DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
 */
-
-
 router.post("/register", (req, res) => {
   const {username, email, password, avatarurl} = req.body; 
   bcrypt.hash(password, saltRounds, function(err, hash) {
