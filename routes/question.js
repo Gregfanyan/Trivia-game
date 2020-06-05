@@ -59,7 +59,25 @@ router.get("/question/:name", (req, res) => {
  });
 
 
- 
+ router.get("/random/:difficulty", (req, res) => {
+  const { difficulty } = req.params;
+  console.log(difficulty)
+
+  pool
+    .query('SELECT * FROM question WHERE id_difficulty = $1 ORDER BY RANDOM() LIMIT 1; ', [difficulty])
+    .then(data => {
+      res.json(data)
+    }) 
+    .catch(e => res.sendStatus(404)); 
+     //console.log(e);
+ });
+
+ router.get("/random", (req, res) => {
+  pool
+    .query('SELECT * FROM question OFFSET RANDOM() * (SELECT COUNT(name) FROM category) LIMIT 1; ')
+    .then(data => res.json(data)) 
+    .catch(e => res.sendStatus(404)); 
+ });
 
 
  router.get("/:id", (req, res) => {
