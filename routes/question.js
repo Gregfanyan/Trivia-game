@@ -3,6 +3,12 @@ var router = express.Router();
 const pool = require("../config.js")
 
 
+/* start
+DEBUG=TRIVIA-TERROR-BACKEND:* npm start
+DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
+sudo pkill -u postgres
+*/
+
 router.get("/question", (req, res) => {
   pool
     .query("SELECT * FROM question LIMIT 10")
@@ -48,6 +54,27 @@ router.get("/question/:name", (req, res) => {
   const { name } = req.params;
   pool
     .query('SELECT * FROM question JOIN category ON (category.id=question.id) WHERE name = $1;', [name])
+    .then(data => res.json(data)) 
+    .catch(e => res.sendStatus(404)); 
+ });
+
+
+ router.get("/random/:difficulty", (req, res) => {
+  const { difficulty } = req.params;
+  console.log(difficulty)
+
+  pool
+    .query('SELECT * FROM question WHERE id_difficulty = $1 ORDER BY RANDOM() LIMIT 1; ', [difficulty])
+    .then(data => {
+      res.json(data)
+    }) 
+    .catch(e => res.sendStatus(404)); 
+     //console.log(e);
+ });
+
+ router.get("/random", (req, res) => {
+  pool
+    .query('SELECT * FROM question OFFSET RANDOM() * (SELECT COUNT(name) FROM category) LIMIT 1; ')
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });

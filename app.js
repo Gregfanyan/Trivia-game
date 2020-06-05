@@ -7,9 +7,9 @@ const dotenv = require("dotenv");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var cors = require("cors");
-var app = express();
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
+var app = express();
 
 /* start
 DEBUG=TRIVIA-TERROR-BACKEND:* npm start
