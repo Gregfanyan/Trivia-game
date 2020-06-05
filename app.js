@@ -11,7 +11,6 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 var app = express();
 
-
 /* start
 DEBUG=TRIVIA-TERROR-BACKEND:* npm start
 DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
