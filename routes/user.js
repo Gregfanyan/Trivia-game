@@ -5,9 +5,6 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-/*
-DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
-*/
 router.post("/register", (req, res) => {
   const {username, email, password, avatarurl} = req.body; 
   bcrypt.hash(password, saltRounds, function(err, hash) {
@@ -35,6 +32,7 @@ router.post("/register", (req, res) => {
     } else {
       res.sendStatus(401);
     }
+});
 
 const verifyAuth = (req, res, next) => {
   const { authorization } = req.headers;
@@ -65,6 +63,7 @@ router.get("/", (req, res) => {
     });
 });
 
+
 router.get("/:email", (req, res) => {
 const{email} = req.params;
   pool
@@ -74,5 +73,6 @@ const{email} = req.params;
       res.sendStatus(404), console.log(e);
     });
 });
+
 
 module.exports = router;
