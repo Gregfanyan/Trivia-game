@@ -1,24 +1,12 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 const pool = require("../config.js");
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-
-
-
 /*
 DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
 */
-
-router.get("/user", (req, res) => {
-  pool
-    .query("SELECT * FROM users")
-    .then((data) => res.json(data))
-    .catch((e) => {
-      res.sendStatus(404), console.log(e);
-    });
-});
 
 
 router.post("/register", (req, res) => {
@@ -59,17 +47,36 @@ const verifyAuth = (req, res, next) => {
       res.sendStatus(401);
       console.log(verification);
       return;
-}
+    }
   } catch (error) {
     res.sendStatus(401);
-return;
+    return;
   }
 };
-
 
 router.get("/admin", verifyAuth, (req, res, next) => {
   res.send("admin page");
 });
 
- 
+router.get("/", (req, res) => {
+  pool
+    .query("SELECT * FROM users")
+    .then((data) => res.json(data))
+    .catch((e) => {
+      res.sendStatus(404), console.log(e);
+    });
+});
+
+
+router.get("/:email", (req, res) => {
+const{email} = req.params;
+  pool
+    .query("SELECT * FROM users WHERE email = $1", [email])
+    .then((data) => res.json(data))
+    .catch((e) => {
+      res.sendStatus(404), console.log(e);
+    });
+});
+
+
 module.exports = router;

@@ -5,14 +5,11 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const dotenv = require("dotenv");
 var bodyParser = require("body-parser");
-var session = require('express-session');
+var session = require("express-session");
 var cors = require("cors");
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
 var app = express();
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcrypt');
-
-
-
 
 
 /* start
@@ -30,16 +27,16 @@ app.use(
   })
 );
 
-let allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Headers', "*");
+let allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   next();
-}
+};
 app.use(allowCrossDomain);
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
 
@@ -66,37 +63,22 @@ app.get("/setname", (req, res) => {
   req.session.name = "John";
   console.log(req.session);
   res.send("testing session");
-  });
-  
-  app.get("/getname", (req, res) => {
-      console.log(req.session.name);
-      res.send(req.session.name)
-      });
+});
 
+app.get("/getname", (req, res) => {
+  console.log(req.session.name);
+  res.send(req.session.name);
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-app.use("/", indexRouter);
-app.use("/", questionRouter);
+app.use("/user", userRouter);
 app.use("/category", categoryRouter);
 app.use("/difficulty", difficultyRouter);
 app.use("/game", gameRouter);
 app.use("/game_moves", game_movesRouter);
 app.use("/trivia_terror_troll", trivia_terror_trollRouter);
 app.use("/avatar", avatarRouter);
-app.use("/user", userRouter);
+app.use("/", indexRouter);
+app.use("/", questionRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));
@@ -111,4 +93,3 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-

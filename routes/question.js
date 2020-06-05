@@ -3,6 +3,12 @@ var router = express.Router();
 const pool = require("../config.js")
 
 
+/* start
+DEBUG=TRIVIA-TERROR-BACKEND:* npm start
+DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
+sudo pkill -u postgres
+*/
+
 router.get("/question", (req, res) => {
   pool
     .query("SELECT * FROM question LIMIT 10")
@@ -51,6 +57,9 @@ router.get("/question/:name", (req, res) => {
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
+
+
+ 
 
 
  router.get("/:id", (req, res) => {
