@@ -4,7 +4,6 @@ const pool = require("../config.js");
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
-=======
 
 /*
 DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
