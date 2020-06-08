@@ -60,7 +60,7 @@ router.get("/question/:name", (req, res) => {
  });
 
 
- router.get("/random/:difficulty", (req, res) => {
+ /*router.get("/random/:difficulty", (req, res) => {
   const { difficulty } = req.params;
   console.log(difficulty)
 
@@ -71,7 +71,7 @@ router.get("/question/:name", (req, res) => {
     }) 
     .catch(e => res.sendStatus(404)); 
      //console.log(e);
- });
+ });*/
 
  router.get("/random", (req, res) => {
   pool
