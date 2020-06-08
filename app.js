@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const dotenv = require("dotenv");
+require("dotenv").config();
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var cors = require("cors");
@@ -26,21 +26,15 @@ app.use(
   })
 );
 
-let allowCrossDomain = function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  next();
-  
-};
-app.use(allowCrossDomain);
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "jade");
 
+app.use(logger("dev"));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
-//app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser());
-
-
-
 app.use(express.json());
+app.use(express.urlencoded());
 
 var indexRouter = require("./routes/index");
 var questionRouter = require("./routes/question");
@@ -51,15 +45,6 @@ var trivia_terror_trollRouter = require("./routes/trivia_terror_troll");
 var game_movesRouter = require("./routes/game_moves");
 var avatarRouter = require("./routes/avatar");
 var userRouter = require("./routes/user");
-
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
-
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/setname", (req, res) => {
   req.session.name = "John";
