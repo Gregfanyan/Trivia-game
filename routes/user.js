@@ -23,15 +23,14 @@ router.post("/register", (req, res) => {
  
  router.post("/login",(req, res) => {
   const {email, password } = req.body; 
-  console.log(req.body.password);
+  //console.log(req.body)
   pool
     .query("SELECT * FROM users WHERE email = $1 AND password = $2 LIMIT 1", [email, password ])
-    .then(res => {
-       const data =  res.rows[0];
-       console.log(data);
+    .then(result => {
+       const data =  result.rows[0];
       if ( email  && password === data.password) {
-      let token = jwt.sign({ email: req.body.email }, "mySecretKey", {
-        expiresIn: "30 days",
+      const token = jwt.sign({ email: req.body.email }, "mySecretKey", {
+        expiresIn: "30 day",
       });
       res.send(token);
     } else {
