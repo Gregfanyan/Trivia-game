@@ -5,11 +5,6 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-/* start
-DEBUG=TRIVIA-TERROR-BACKEND:* npm start
-DEBUG=TRIVIA-TERROR-BACKEND:* npm run devstart
-sudo pkill -u postgres
-*/
 
 router.post("/register", (req, res) => {
   const {username, email, password, avatarurl} = req.body; 
