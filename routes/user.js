@@ -36,10 +36,10 @@ router.post("/login", (req, res) => {
         console.log(" in here");
         bcrypt.compare(password, data.password, function (err, result) {
           if (result) {
-            const token = jwt.sign({ email: req.body.email }, "mySecretKey", {
+            const token = jwt.sign({ data }, "mySecretKey", {
               expiresIn: "30 day",
             });
-            res.send(token);
+            res.send(data);
           } else {
             res.sendStatus(401);
           }
@@ -90,3 +90,32 @@ router.get("/:email", (req, res) => {
 });
 
 module.exports = router;
+
+
+ /*
+ 
+ router.post("/login", (req, res) => {
+  const { email, password, username } = req.body;
+  pool
+    .query("SELECT * FROM users WHERE email = $1 LIMIT 1", [email])
+    .then((result) => {
+      const data = result.rows[0];
+      if (result.rows.length > 0 && email) {
+        bcrypt.compare(password, data.password, function (err, result) {
+          if (result) {
+            const token = jwt.sign({ email: req.body.email, username : req.body.username }, "mySecretKey", {  //should I add here username? 
+              expiresIn: "30 day",
+            });
+            res.send(token);
+          } else {
+            res.sendStatus(401);
+          }
+        });
+      } else {
+        res.sendStatus(401);
+      }
+    });
+});
+ 
+ 
+ */
