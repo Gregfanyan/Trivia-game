@@ -88,5 +88,14 @@ router.get("/question/:name", (req, res) => {
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
+
+ router.get("/dashboard", (req, res) => {
+  pool
+    .query('SELECT  COUNT(no_of_displays), COUNT(no_of_correct_answers), COUNT(submitterId), COUNT(question_status.status) FROM question FULL JOIN question_status ON (question_status.id = question.status) JOIN users ON (submitterId = users.id) GROUP BY users.id LIMIT 1')
+    .then((data) => res.json(data))
+    .catch((e) => {
+      res.sendStatus(404), console.log(e);
+    });
+});
  
 module.exports = router;
