@@ -37,7 +37,7 @@ router.post("/login", (req, res) => {
         bcrypt.compare(password, data.password, function (err, result) {
           if (result) {
             const token = jwt.sign({ data }, "mySecretKey", {
-              expiresIn: "30 day",
+              expiresIn: "30 days",
             });
             res.send(data);
           } else {

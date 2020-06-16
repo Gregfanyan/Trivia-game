@@ -20,11 +20,11 @@ router.get("/question", (req, res) => {
 });
 
 router.post("/question", (req, res) => {
-  const { text, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3, id_difficulty, id_category, id_creator } = req.body; 
+  const { text, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3, id_difficulty, id_category, id_submitter } = req.body; 
 
   pool
-    .query('INSERT INTO question (text, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3, id_difficulty, id_category, id_creator) values($1, $2, $3, $4, $5, $6, $7, $8)RETURNING *;',
-    [text, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3, id_difficulty, id_category, id_creator])
+    .query('INSERT INTO question (text, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3, id_difficulty, id_category, id_submitter) values($1, $2, $3, $4, $5, $6, $7, $8)RETURNING *;',
+    [text, correct_answer, incorrect_answer1, incorrect_answer2, incorrect_answer3, id_difficulty, id_category, id_submitter])
     .then(() => {pool.query('SELECT * FROM question')
     .then(data => res.status(201).json(data))})
     .catch(e =>{ res.sendStatus(404)
