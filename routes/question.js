@@ -89,9 +89,21 @@ router.get("/question/:name", (req, res) => {
     .catch(e => res.sendStatus(404)); 
  });
 
- router.get("/dashboard", (req, res) => {
+ router.get("/dashboard/:id_submitter", (req, res) => {
+  const { id_submitter } = req.params;
+
   pool
-    .query('SELECT  COUNT(no_of_displays), COUNT(no_of_correct_answers), COUNT(submitterId), COUNT(question_status.status) FROM question FULL JOIN question_status ON (question_status.id = question.status) JOIN users ON (submitterId = users.id) GROUP BY users.id LIMIT 1')
+    .query('SELECT  COUNT(no_of_displays),COUNT(no_of_correct_answers), COUNT(id_submitter), COUNT(question_status.status) FROM question FULL JOIN question_status ON (question_status.id = question.status) JOIN users ON (id_submitter = users.id) WHERE id_submitter = $1 GROUP BY users.id LIMIT 1;', [id_submitter])
+    .then((data) => res.json(data))
+    .catch((e) => {
+      res.sendStatus(404), console.log(e);
+    });
+});
+
+router.get("/submitter/:id_submitter", (req, res) => {
+  const { id_submitter } = req.params;
+  pool
+    .query("SELECT * FROM question WHERE id_submitter = $1;", [id_submitter])
     .then((data) => res.json(data))
     .catch((e) => {
       res.sendStatus(404), console.log(e);
