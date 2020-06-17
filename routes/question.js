@@ -75,7 +75,7 @@ router.get("/question/:name", (req, res) => {
 
  router.get("/random", (req, res) => {
   pool
-    .query('SELECT * FROM question OFFSET RANDOM() * (SELECT COUNT(name) FROM category) LIMIT 1; ')
+    .query('SELECT * FROM question OFFSET RANDOM() * (SELECT COUNT(id) FROM question) LIMIT 1; ')
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
