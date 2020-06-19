@@ -83,7 +83,7 @@ router.get("/question/:name", (req, res) => {
 
  router.get("/random/approved", (req, res) => {
   pool
-    .query('SELECT * FROM question WHERE question.status = 2 OFFSET RANDOM() * (SELECT COUNT(id) FROM question) LIMIT 1; ')
+    .query('SELECT * FROM question WHERE status = 2 ORDER BY RANDOM() LIMIT 1; ')
     .then(data => res.json(data)) 
     .catch(e => res.sendStatus(404)); 
  });
@@ -119,35 +119,10 @@ router.get("/submitter/:id_submitter", (req, res) => {
     });
 });
  
-/*router.post("/question/update/:display/:correct/:id", (req, res) => {
-  const { no_of_displays, no_of_correct_answers, id } = req.body; 
-  console.log(req.body)
-
-  pool
-    .query('UPDATE question SET no_of_displays = $1, no_of_correct_answers = $2 WHERE id = $3 RETURNING *;',
-    [no_of_displays, no_of_correct_answers, id])
-    .then(() => {pool.query('SELECT * FROM question') 
-    .then(data => {res.status(201).json(data)
-    console.log()
-    })})
-    .catch(e =>{ res.sendStatus(404)
-    console.log(e)
-    });
- });*/
 
 
-/*router.post("/question/:id", (req, res) => {
-  const { no_of_displays, no_of_correct_answers, id } = req.body; 
 
-  pool
-    .query('INSERT INTO question (no_of_displays, no_of_correct_answers) values($1, $2) SELECT no_of_displays, no_of_correct_answers FROM question WHERE id = $3;',
-    [no_of_displays, no_of_correct_answers, id])
-    .then(() => {pool.query('SELECT * FROM question') 
-    .then(data => res.status(201).json(data))})
-    .catch(e =>{ res.sendStatus(404)
-    console.log(e)
-    });
- });*/
+
 
 
  router.post("/question/:id/:display/:correct", (req, res) => {
