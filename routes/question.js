@@ -93,8 +93,10 @@ router.get("/question/:name", (req, res) => {
   const { id_submitter } = req.params;
 
   pool
-    .query('SELECT  COUNT(no_of_displays),COUNT(no_of_correct_answers), COUNT(id_submitter), COUNT(question_status.status) FROM question FULL JOIN question_status ON (question_status.id = question.status) JOIN users ON (id_submitter = users.id) WHERE id_submitter = $1 GROUP BY users.id LIMIT 1;', [id_submitter])
-    .then((data) => res.json(data))
+    .query('SELECT  COUNT(no_of_displays), COUNT(no_of_correct_answers), COUNT(id_submitter), COUNT(question_status.status) FROM question FULL JOIN question_status ON (question_status.id = question.status) JOIN users ON (id_submitter = users.id) WHERE id_submitter = $1 GROUP BY users.id LIMIT 1;', [id_submitter])
+    .then((data) => {res.json(data)
+    console.log(data.fields)
+    })
     .catch((e) => {
       res.sendStatus(404), console.log(e);
     });
@@ -110,4 +112,47 @@ router.get("/submitter/:id_submitter", (req, res) => {
     });
 });
  
-module.exports = router;
+/*router.post("/question/update/:display/:correct/:id", (req, res) => {
+  const { no_of_displays, no_of_correct_answers, id } = req.body; 
+  console.log(req.body)
+
+  pool
+    .query('UPDATE question SET no_of_displays = $1, no_of_correct_answers = $2 WHERE id = $3 RETURNING *;',
+    [no_of_displays, no_of_correct_answers, id])
+    .then(() => {pool.query('SELECT * FROM question') 
+    .then(data => {res.status(201).json(data)
+    console.log()
+    })})
+    .catch(e =>{ res.sendStatus(404)
+    console.log(e)
+    });
+ });*/
+
+
+/*router.post("/question/:id", (req, res) => {
+  const { no_of_displays, no_of_correct_answers, id } = req.body; 
+
+  pool
+    .query('INSERT INTO question (no_of_displays, no_of_correct_answers) values($1, $2) SELECT no_of_displays, no_of_correct_answers FROM question WHERE id = $3;',
+    [no_of_displays, no_of_correct_answers, id])
+    .then(() => {pool.query('SELECT * FROM question') 
+    .then(data => res.status(201).json(data))})
+    .catch(e =>{ res.sendStatus(404)
+    console.log(e)
+    });
+ });*/
+
+
+ router.post("/question/update/:display/:correct/:id", (req, res) => {
+  const { display, correct, id } = req.body; 
+  pool
+    .query('UPDATE question SET no_of_displays = $1, no_of_correct_answers = $2 WHERE id = $3 RETURNING *;',
+    [display, correct, id])
+    .then(() => {pool.query('SELECT * FROM question') 
+    .then(data => res.status(201).json(data))})
+    .catch(e =>{ res.sendStatus(404)
+    console.log(e)
+    });
+ });
+
+ module.exports = router;
