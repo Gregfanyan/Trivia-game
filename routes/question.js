@@ -143,8 +143,8 @@ router.get("/submitter/:id_submitter", (req, res) => {
  });*/
 
 
- router.post("/question/update/:display/:correct/:id", (req, res) => {
-  const { display, correct, id } = req.body; 
+ router.post("/question/:id/:display/:correct", (req, res) => {
+  const { id, display, correct } = req.body; 
   pool
     .query('UPDATE question SET no_of_displays = $1, no_of_correct_answers = $2 WHERE id = $3 RETURNING *;',
     [display, correct, id])
