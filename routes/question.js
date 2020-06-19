@@ -81,6 +81,13 @@ router.get("/question/:name", (req, res) => {
  });
 
 
+ router.get("/random/approved", (req, res) => {
+  pool
+    .query('SELECT * FROM question  JOIN question_status ON (question.status = question_status.id) WHERE question_status.id = 2 OFFSET RANDOM() * (SELECT COUNT(id) FROM question) LIMIT 1; ')
+    .then(data => res.json(data)) 
+    .catch(e => res.sendStatus(404)); 
+ });
+
  router.get("/:id", (req, res) => {
   const { id } = req.params;
   pool
